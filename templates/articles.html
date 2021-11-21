@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block body %}
+<h2>Kontrol Paneli</h2>
+
+<p style="color: black;">Hoşgeldiniz <small style="color: red;">{{request.user.username}}</small></p>
+<br>
+<br><br>
+{% if article %}
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">İD</th>
+            <th scope="col">Başlık</th>
+            <th scope="col">Yazar</th>
+            <th scope="col">Tarih</th>
+            <th scope="col">Güncelle</th>
+            <th scope="col">Sil</th>
+
+        </tr>
+
+    </thead>
+    <tbody>
+        {% for articles in article %}
+
+
+        <tr>
+            <th scope="row">{{articles.id}}</th>
+            <td><a style="color: red;" href="{% url 'detail' articles.id %}">{{articles.title}}</a></td>
+            <td>{{articles.author}}</td>
+            <td>{{articles.created_date}}</td>
+            <td><a class="btn btn-danger" href="{% url 'update' articles.id %}">
+                    Güncelle
+                </a></td>
+            <td><a class="btn btn-danger" href="{% url 'delete' articles.id %}">
+                    Sil
+                </a></td>
+        </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="/blog/addarticle/{{articles.id}}" class="btn btn-danger">Makale Ekle</a>
+{% else %}
+<div>
+    <div class="alert alert-warning">Şu Anda Hiç Makaleniz Bulunmamaktadır!!</div>
+    <a href="/blog/addarticle/{{articles.id}}" class="btn btn-danger">Makale Ekle</a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

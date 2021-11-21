@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block body %}
+<h2>Anasayfa</h2>
+<div class="row tm-row">
+    <div class="col-12">
+        <form method="GET" class="form-inline tm-mb-80 tm-search-form">
+            {% csrf_token %}
+            <input class="form-control tm-search-input" name="keyword" type="text" placeholder="Search..."
+                aria-label="Search">
+            <button class="tm-search-button" type="submit">
+                <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
+            </button>
+        </form>
+    </div>
+</div>
+{% if articles %}
+{% for artic in articles %}
+<div>
+    <hr class="tm-hr-primary">
+    <a href="{% url 'detail' artic.id %}" class="effect-lily tm-post-link tm-pt-20">
+
+        <h2 class="tm-pt-30 tm-color-primary tm-post-title">{{artic.title}}</h2>
+        {% if artic.article_image %}
+        <div class="tm-post-link-inner">
+            <img src="{{artic.article_image.url}}" alt="Image" class="img-fluid">
+        </div>
+        {% else %}
+        {% endif %}
+    </a>
+    <p class="tm-pt-30">
+        {{artic.content|safe|truncatewords:40}}
+    </p>
+    <a href="{% url 'detail' artic.id %}">Devamını Oku</a>
+    <div class="d-flex justify-content-between tm-pt-45">
+        <span class="tm-color-primary">{{artic.author}}</span>
+        <span class="tm-color-primary">{{artic.created_date}}</span>
+    </div>
+    <hr>
+    <div class="d-flex justify-content-between">
+        <span>96 comments</span>
+        <span>by Admin Caesarking</span>
+    </div>
+</div>
+
+{% endfor %}
+
+{% else %}
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+        <div class="col-lg-8">
+            <div class="aler alert-danger">
+                Makale Bulunamadı
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+
+
+
+
+
+
+{% endblock %}

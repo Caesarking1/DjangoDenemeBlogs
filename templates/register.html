@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% load crispy_forms_tags %}
+
+<div class="row">
+    <h2>Kayıt Ol</h2>
+    <br>
+    <br>
+    <div class="col-md-12 offset-md-6">
+
+        <form method="post">
+
+            {% csrf_token %}
+            {{form|crispy|safe}}
+            <button class="btn btn-danger" type="submit">Kayıt Ol
+
+            </button>
+
+
+
+        </form>
+    </div>
+
+
+
+</div>
+
+{% endblock %}
